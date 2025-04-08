@@ -3,15 +3,17 @@ from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from .serializers import UserSerializer, TeamSerializer, ActivitySerializer, LeaderboardSerializer, WorkoutSerializer
 from .models import User, Team, Activity, Leaderboard, Workout
+from django.conf import settings
 
 @api_view(['GET'])
 def api_root(request, format=None):
+    base_url = "https://friendly-goggles-7vgprq5qqqxfrjxj-8000.app.github.dev" if request.get_host() == "friendly-goggles-7vgprq5qqqxfrjxj-8000.app.github.dev" else "http://localhost:8000"
     return Response({
-        'users': 'api/users/',
-        'teams': 'api/teams/',
-        'activities': 'api/activities/',
-        'leaderboard': 'api/leaderboard/',
-        'workouts': 'api/workouts/'
+        'users': f'{base_url}/api/users/',
+        'teams': f'{base_url}/api/teams/',
+        'activities': f'{base_url}/api/activities/',
+        'leaderboard': f'{base_url}/api/leaderboard/',
+        'workouts': f'{base_url}/api/workouts/'
     })
 
 class UserViewSet(viewsets.ModelViewSet):
